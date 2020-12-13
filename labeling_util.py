@@ -20,13 +20,9 @@ def get_projects_info(project_names):
     List of project names for which data should be retrieved
     
     Output:
-    dict:
-        data dict: data in the form of a dictionary with the structure: {project_name: {case_id: {data about the case}}}
-        image to sample: mapping from image file name to sample id for matching with labels
-        case to images: mapping from case id to list of associated images for dataset creation
-        labels: label dataframe
-        mutational signatures: mutatiuonal signatures dataframe
-        hugo symbols: hugo symbols dataframe
+    tuple: first element is a dict with project names as keys and data dicts as values,
+           second element is a maping from file_name for slide images to case_id for dataset generation
+           third element is the inverse of second, from case_id to list of related file_names
     '''
     
     #check if project_names is a list of strings
@@ -69,7 +65,7 @@ def get_projects_info(project_names):
     projects_data={}
     image_to_sample={}
     case_to_images={}
-    out_hugos = pd.DataFrame()
+    out_hugos = []
     
     #mutational signature file for the entire tcga dataset
     signatures = pd.read_csv('TCGA_WES_sigProfiler_SBS_signatures_in_samples.csv')
@@ -216,7 +212,7 @@ def get_projects_info(project_names):
     print("done")   
     return {"data dict":projects_data,"image to sample":image_to_sample,
             "case to images":case_to_images,"labels":samples, "mutational signatures" : signatures,
-            "hugo symbols" : out_hugos}
+            "hugo symbols" : pd.DataFrame(out_hugos)}
 
 #file download functionality
 def download_extract(file_id,project_name):
