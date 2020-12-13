@@ -20,9 +20,13 @@ def get_projects_info(project_names):
     List of project names for which data should be retrieved
     
     Output:
-    tuple: first element is a dict with project names as keys and data dicts as values,
-           second element is a maping from file_name for slide images to case_id for dataset generation
-           third element is the inverse of second, from case_id to list of related file_names
+    dict:
+        data dict: data in the form of a dictionary with the structure: {project_name: {case_id: {data about the case}}}
+        image to sample: mapping from image file name to sample id for matching with labels
+        case to images: mapping from case id to list of associated images for dataset creation
+        labels: label dataframe
+        mutational signatures: mutatiuonal signatures dataframe
+        hugo symbols: hugo symbols dataframe
     '''
     
     #check if project_names is a list of strings
