@@ -286,8 +286,8 @@ def download_maf_for_proj(project_name):
     file_id = file_data['data']['hits'][0]['file_id']
     return download_extract(file_id,project_name)
 
-def download_image(file_name,path=""):
-    file_path = os.path.join(path,file_name)
+def download_image(filename,path=""):
+    file_path = os.path.join(path,filename)
     #check if image already exists
     if not os.path.exists(file_path):
         files_endpt = "https://api.gdc.cancer.gov/files"
@@ -311,10 +311,10 @@ def download_image(file_name,path=""):
         file_id = file_data['data']['hits'][0]['file_id']
 
         data_endpt = "https://api.gdc.cancer.gov/data/{}".format(file_id)
-        print("downloading image {} to path {}".format(file_name,file_path))
+        print("downloading image {} to path {}".format(filename,file_path))
         response = requests.get(data_endpt, headers = {"Content-Type": "application/json"})
 
-        with open(file_name, "wb") as output_file:
+        with open(file_path, "wb") as output_file:
             output_file.write(response.content)
     else:
         print("{} already exists, not downloading anything".format(file_path))
