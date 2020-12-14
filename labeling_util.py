@@ -295,7 +295,7 @@ def download_image(filename,path=""):
         file_name = {"op":"=",
                     "content":{
                         "field":"file_name",
-                        "value":file_name
+                        "value":filename
                         }
                     }
         params = {
